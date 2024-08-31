@@ -5,6 +5,7 @@ import { UserExistsException } from '../src/exceptions/UserExistsException';
 import { BookNotFoundException } from '../src/exceptions/BookNotFoundException'; 
 import { PermissionDeniedException } from '../src/exceptions/PermissionDeniedException';
 import { BookAlreadyBorrowedException } from '../src/exceptions/BookAlreadyBorrowedException';
+import { UnsupportedOperationException } from '../src/exceptions/UnsupportedOperationException ';
 
 describe('Library', () => {
     let library: Library;
@@ -70,5 +71,34 @@ describe('Library', () => {
         const fetchedUser = library.getUserByName('Dhruv');
 
         expect(fetchedUser).toEqual(primaryLibrarian);
+    });
+
+    const book1 = new Book('9780132350884', 'Clean Code', 'Robert Cecil Martin', new Date());
+    const book2 = new Book('9780134685991', 'Effective Java', 'Joshua Bloch', new Date());
+    const librarian2 = new User('Dhruv', Role.LIBRARIAN);
+
+    test('should retrieve all available books', () => {
+
+        library.addUser(librarian2);
+        library.addBook(librarian2, book1);
+        library.addBook(librarian2, book2);
+
+        const availableBooks = library.viewAvailableBooks();
+
+        expect(availableBooks.size).toBe(2);
+        expect(availableBooks.has('9780132350884')).toBe(true);
+        expect(availableBooks.has('9780134685991')).toBe(true);
+    });
+
+    const librarian3 = new User('Dhruv', Role.LIBRARIAN);
+    const book3 = new Book('9780132350884', 'Clean Code', 'Robert Cecil Martin', new Date());
+
+    test('should return unmodifiable map', () => {
+        library.addUser(librarian3);
+        library.addBook(librarian3, book2);
+
+        const availableBooks = library.viewAvailableBooks();
+
+        expect(() => availableBooks.set('9780134685991', new Book('9780134685991', 'Effective Java', 'Joshua Bloch', new Date()))).toThrow(UnsupportedOperationException);
     });
 });

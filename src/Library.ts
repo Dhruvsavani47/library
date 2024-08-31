@@ -51,4 +51,8 @@ export class Library {
     public getBookByISBN(isbn: string): Book | undefined {
         return this.bookInventory.get(isbn);
     }
+
+    public viewAvailableBooks(): Map<string, Book> {
+        return new Map(this.bookInventory);
+    }
 }
