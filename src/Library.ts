@@ -84,4 +84,27 @@ export class Library {
     public getBorrowerNameByISBN(isbn: string): string | undefined {
         return this.borrowedBooks.get(isbn);
     }
+
+    public getBookByISBNFromBorrowedBook(isbn: string): Book | undefined {
+        return this.borrowedBookDetails.get(isbn);
+    }
+
+    public returnBook(user: User, isbn: string): void {
+        UserValidator.validateUser(user, 'User should not be null');
+
+        if (!this.borrowedBooks.has(isbn)) {
+            throw new BookNotFoundException('book was not borrowed by any user');
+        }
+        if (user.getUserName() !== this.borrowedBooks.get(isbn)) {
+            throw new Error('book was not borrowed by this user');
+        }
+        const book = this.getBookByISBNFromBorrowedBook(isbn);
+
+        if (!book) {
+            throw new Error("Book not found");
+        }
+
+        this.bookInventory.set(isbn, book);
+        this.borrowedBooks.delete(isbn);
+    }
 }

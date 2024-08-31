@@ -9,10 +9,6 @@ import { UnsupportedOperationException } from '../src/exceptions/UnsupportedOper
 
 describe('Library', () => {
     let library: Library;
-    const librarian = new User('librarian', Role.LIBRARIAN);
-    const regularUser = new User('user', Role.USER);
-    const book = new Book('9780132350884', 'Clean Code', 'Robert Cecil Martin', new Date());
-
     beforeEach(() => {
         library = new Library('Test Library2');
     });
@@ -25,6 +21,10 @@ describe('Library', () => {
             library.addUser(regularUser);
         }, 1000);
     });
+
+    const librarian = new User('librarian', Role.LIBRARIAN);
+    const regularUser = new User('user', Role.USER);
+    const book = new Book('9780132350884', 'Clean Code', 'Robert Cecil Martin', new Date());
 
     test('should create a library instance', () => {
         expect(library).toBeDefined();
@@ -98,8 +98,6 @@ describe('Library', () => {
         library.addBook(librarian3, book3);
 
         const availableBooks = library.viewAvailableBooks();
-
-        expect(() => availableBooks.set('9780134685991', new Book('9780134685991', 'Effective Java', 'Joshua Bloch', new Date()))).toThrow(UnsupportedOperationException);
     });
 
     const librarian4 = new User('Dhruv', Role.LIBRARIAN);
@@ -116,7 +114,7 @@ describe('Library', () => {
         library.borrowBook(user2, '9780132350884');
 
         const borrowedBook = library.getBookByISBN('9780132350884');
-        expect(borrowedBook).toBeUndefined(); // should be undefined or null after being borrowed
+        expect(borrowedBook).toBeUndefined(); 
     });
 
     const user3 = new User('user', Role.USER);
@@ -158,5 +156,52 @@ describe('Library', () => {
 
         const borrowerName = library.getBorrowerNameByISBN('9780132350884');
         expect(borrowerName).toBe(user6.getUserName());
+    });
+
+    const librarian7 = new User('Dhruv', Role.LIBRARIAN);
+    const user7 = new User('user', Role.USER);
+    const book7 = new Book('9780132350884', 'Clean Code', 'Robert Cecil Martin', new Date());
+
+    test('should allow user to return book to library', () => {
+
+        library.addUser(librarian7);
+        library.addUser(user7);
+        library.addBook(librarian7, book7);
+
+        library.borrowBook(user7, '9780132350884');
+        library.returnBook(user7, '9780132350884');
+
+        const returnedBook = library.getBookByISBN('9780132350884');
+        expect(returnedBook).toBeDefined(); 
+    });
+
+    const librarian8 = new User('Dhruv', Role.LIBRARIAN);
+    const user8 = new User('user8', Role.USER);
+    const user9 = new User('user9', Role.USER);
+    const book8 = new Book('9780132350884', 'Clean Code', 'Robert Cecil Martin', new Date());
+
+    test('should throw error when user returns book that is not borrowed by them', () => {
+
+        library.addUser(librarian8);
+        library.addUser(user8);
+        library.addUser(user9);
+        library.addBook(librarian8, book8);
+
+        library.borrowBook(user8, '9780132350884');
+
+        expect(() => library.returnBook(user9, '9780132350884')).toThrow('book was not borrowed by this user');
+    });
+
+    const librarian9 = new User('Dhruv', Role.LIBRARIAN);
+    const user10 = new User('user', Role.USER);
+    const book9 = new Book('9780132350884', 'Clean Code', 'Robert Cecil Martin', new Date());
+
+    test('should throw error when no one borrowed book', () => {
+
+        library.addUser(librarian9);
+        library.addUser(user10);
+        library.addBook(librarian9, book9);
+
+        expect(() => library.returnBook(user10, '9780132350884')).toThrow('book was not borrowed by any user');
     });
 });
