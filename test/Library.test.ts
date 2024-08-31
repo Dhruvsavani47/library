@@ -1,6 +1,10 @@
 import { Library } from '../src/Library'; 
 import { User, Role } from '../src/User';
 import { Book } from '../src/Book';
+import { UserExistsException } from '../src/exceptions/UserExistsException'; 
+import { BookNotFoundException } from '../src/exceptions/BookNotFoundException'; 
+import { PermissionDeniedException } from '../src/exceptions/PermissionDeniedException';
+import { BookAlreadyBorrowedException } from '../src/exceptions/BookAlreadyBorrowedException';
 
 describe('Library', () => {
     let library: Library;
@@ -10,8 +14,15 @@ describe('Library', () => {
 
     beforeEach(() => {
         library = new Library('Test Library');
-        library.addUser(librarian);
-        library.addUser(regularUser);
+    });
+
+    let timer: NodeJS.Timeout;
+
+    afterEach(() => {
+        clearTimeout(timer);
+            library.addUser(librarian);
+            library.addUser(regularUser);
+        
     });
 
     test('should create a library instance', () => {
@@ -39,5 +50,11 @@ describe('Library', () => {
         expect(() => library.addBook(regularUser, book)).toThrow('You are not authorized to add book');
     });
 
-    
+    test('should add user to library', () => {
+        library.addUser(librarian);
+        const user = library.getUserByName('Dhruv');
+
+        expect(user).toEqual(librarian);
+    });
+
 });
