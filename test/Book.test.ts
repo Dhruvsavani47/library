@@ -1,4 +1,4 @@
-import { Book } from '../src/Book'; // Assuming Book class is in a file named Book.ts
+import { Book } from '../src/Book';
 
 describe('Book', () => {
     test('should throw an exception when ISBN is null', () => {

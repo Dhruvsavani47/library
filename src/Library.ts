@@ -20,6 +20,7 @@ export class Library {
         if (name.length <= 4) {
             throw new Error('Library Name Should have at least 4 characters');
         }
+
         this.name = name;
         this.bookInventory = new Map<string, Book>();
         this.userCatalog = new Map<string, User>();
@@ -32,6 +33,7 @@ export class Library {
         if (this.userCatalog.has(user.getUserName())) {
             throw new UserExistsException('User already exists in catalog');
         }
+
         this.userCatalog.set(user.getUserName(), user);
     }
 
@@ -45,7 +47,8 @@ export class Library {
         BookValidator.validateBookNotNull(book, 'Book not found');
         if (user.isPermittedToAddBook()) {
             this.bookInventory.set(book.getISBN(), book);
-        } else {
+        } 
+        else {
             throw new PermissionDeniedException('You are not authorized to add book');
         }
     }
@@ -95,6 +98,7 @@ export class Library {
         if (!this.borrowedBooks.has(isbn)) {
             throw new BookNotFoundException('book was not borrowed by any user');
         }
+        
         if (user.getUserName() !== this.borrowedBooks.get(isbn)) {
             throw new Error('book was not borrowed by this user');
         }
