@@ -1,11 +1,12 @@
-enum Role {
-    LIBRARIAN,
-    USER
+export enum Role {
+    LIBRARIAN = 'LIBRARIAN',
+    USER = 'USER'
 }
 
 export class User {
     private userName: string;
     private role: Role;
+    static Role: any;
 
     constructor(userName: string, role: Role) {
         this.userName = userName;

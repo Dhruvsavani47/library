@@ -47,4 +47,8 @@ export class Library {
             throw new PermissionDeniedException('You are not authorized to add book');
         }
     }
+
+    public getBookByISBN(isbn: string): Book | undefined {
+        return this.bookInventory.get(isbn);
+    }
 }
