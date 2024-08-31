@@ -13,16 +13,16 @@ describe('Library', () => {
     const book = new Book('9780132350884', 'Clean Code', 'Robert Cecil Martin', new Date());
 
     beforeEach(() => {
-        library = new Library('Test Library');
+        library = new Library('Test Library2');
     });
 
     let timer: NodeJS.Timeout;
 
     afterEach(() => {
-        clearTimeout(timer);
+        timer = setTimeout(() => {
             library.addUser(librarian);
             library.addUser(regularUser);
-        
+        }, 1000);
     });
 
     test('should create a library instance', () => {
@@ -57,4 +57,18 @@ describe('Library', () => {
         expect(user).toEqual(librarian);
     });
 
+    const primaryLibrarian = new User('Dhruv', Role.LIBRARIAN);
+    const secondaryLibrarian = new User('Dhruv', Role.LIBRARIAN);
+
+    test('should not allow duplicate users', () => {
+        library.addUser(primaryLibrarian);
+        expect(() => library.addUser(secondaryLibrarian)).toThrow('User already exists in catalog');
+    });
+
+    test('should fetch user by username', () => {
+        library.addUser(primaryLibrarian);
+        const fetchedUser = library.getUserByName('Dhruv');
+
+        expect(fetchedUser).toEqual(primaryLibrarian);
+    });
 });
