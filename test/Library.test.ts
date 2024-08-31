@@ -25,7 +25,7 @@ describe('Library', () => {
         expect(() => new Library('Dhru')).toThrow('Library Name Should have at least 4 characters');
     });
 
-    // test('should throw error if user is null', () => {
-    //     expect(() => library.addUser(null as any)).toThrow('User should not be null');
-    // });
+    test('should throw error if user is null', () => {
+        expect(() => library.addUser(null as any)).toThrow('User should not be null');
+    });
 });

@@ -1,12 +1,10 @@
 import { User } from './User'; 
 import { Book } from './Book'; 
 import { UserExistsException } from './exceptions/UserExistsException'; 
-// import { BookNotFoundException } from './exceptions/BookNotFoundException'; 
-// import { PermissionDeniedException } from './exceptions/PermissionDeniedException';
-// import { BookAlreadyBorrowedException } from './exceptions/BookAlreadyBorrowedException'; 
+import { PermissionDeniedException } from './exceptions/PermissionDeniedException';
 import { UserValidator } from './utils/UserValidator';
 import { StringValidator } from './utils/StringValidator'; 
-// import { validateBookNotNull } from './utils/BookValidator';
+import { BookValidator } from './utils/BookValidator'; 
 
 export class Library {
     private name: string;
@@ -39,4 +37,14 @@ export class Library {
         return this.userCatalog.get(userName);
     }
 
+
+    public addBook(user: User, book: Book): void {
+        UserValidator.validateUser(user, 'User should not be null');
+        BookValidator.validateBookNotNull(book, 'Book not found');
+        if (user.isPermittedToAddBook()) {
+            this.bookInventory.set(book.getISBN(), book);
+        } else {
+            throw new PermissionDeniedException('You are not authorized to add book');
+        }
+    }
 }
