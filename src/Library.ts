@@ -2,6 +2,8 @@ import { User } from './User';
 import { Book } from './Book'; 
 import { UserExistsException } from './exceptions/UserExistsException'; 
 import { PermissionDeniedException } from './exceptions/PermissionDeniedException';
+import { BookAlreadyBorrowedException } from './exceptions/BookAlreadyBorrowedException';
+import { BookNotFoundException } from './exceptions/BookNotFoundException';
 import { UserValidator } from './utils/UserValidator';
 import { StringValidator } from './utils/StringValidator'; 
 import { BookValidator } from './utils/BookValidator'; 
@@ -54,5 +56,32 @@ export class Library {
 
     public viewAvailableBooks(): Map<string, Book> {
         return new Map(this.bookInventory);
+    }
+
+    private isBookBorrowedBySomeUser(isbn: string): boolean {
+        return this.borrowedBooks.has(isbn);
+    }
+    
+    public borrowBook(user: User, isbn: string): void {
+        UserValidator.validateUser(user, 'User should not be null');
+        const book = this.bookInventory.get(isbn);
+
+        if (!book) {
+            throw new Error("Book not found");
+        }
+
+        if (this.isBookBorrowedBySomeUser(isbn)) {
+            throw new BookAlreadyBorrowedException('Book is already borrowed');
+        }
+
+        BookValidator.validateBookNotNull(book, 'Book not found');
+
+        this.borrowedBooks.set(isbn, user.getUserName());
+        this.borrowedBookDetails.set(isbn, book);
+        this.bookInventory.delete(isbn);
+    }
+
+    public getBorrowerNameByISBN(isbn: string): string | undefined {
+        return this.borrowedBooks.get(isbn);
     }
 }

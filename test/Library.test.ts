@@ -95,10 +95,68 @@ describe('Library', () => {
 
     test('should return unmodifiable map', () => {
         library.addUser(librarian3);
-        library.addBook(librarian3, book2);
+        library.addBook(librarian3, book3);
 
         const availableBooks = library.viewAvailableBooks();
 
         expect(() => availableBooks.set('9780134685991', new Book('9780134685991', 'Effective Java', 'Joshua Bloch', new Date()))).toThrow(UnsupportedOperationException);
+    });
+
+    const librarian4 = new User('Dhruv', Role.LIBRARIAN);
+    const user2 = new User('user', Role.USER);
+    const book4 = new Book('9780132350884', 'Clean Code', 'Robert Cecil Martin', new Date());
+
+    test('should allow user to borrow book from library', () => {
+
+        library.addUser(librarian4);
+        library.addUser(user2);
+        library.addBook(librarian4, book4);
+
+    
+        library.borrowBook(user2, '9780132350884');
+
+        const borrowedBook = library.getBookByISBN('9780132350884');
+        expect(borrowedBook).toBeUndefined(); // should be undefined or null after being borrowed
+    });
+
+    const user3 = new User('user', Role.USER);
+
+    test('should throw error when book not found during borrow request', () => {
+
+        library.addUser(user3);
+        expect(() => library.borrowBook(user3, '9780132350884')).toThrow('Book not found');
+    });
+
+    const librarian5 = new User('Dhruv', Role.LIBRARIAN);
+    const user4 = new User('user1', Role.USER);
+    const user5 = new User('user2', Role.USER);
+    const book5 = new Book('9780132350884', 'Clean Code', 'Robert Cecil Martin', new Date());
+
+    test('should throw error when book is already borrowed', () => {
+
+        library.addUser(librarian5);
+        library.addUser(user4);
+        library.addUser(user5);
+        library.addBook(librarian5, book5);
+
+        library.borrowBook(user4, '9780132350884');
+
+        expect(() => library.borrowBook(user5, '9780132350884')).toThrow('Book is already borrowed');
+    });
+
+    const librarian6 = new User('Dhruv', Role.LIBRARIAN);
+    const user6 = new User('user', Role.USER);
+    const book6 = new Book('9780132350884', 'Clean Code', 'Robert Cecil Martin', new Date());
+
+    test('should return borrower name who borrowed book', () => {
+
+        library.addUser(librarian6);
+        library.addUser(user6);
+        library.addBook(librarian6, book6);
+
+        library.borrowBook(user6, '9780132350884');
+
+        const borrowerName = library.getBorrowerNameByISBN('9780132350884');
+        expect(borrowerName).toBe(user6.getUserName());
     });
 });
