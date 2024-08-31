@@ -3,7 +3,7 @@ enum Role {
     USER
 }
 
-class User {
+export class User {
     private userName: string;
     private role: Role;
 
