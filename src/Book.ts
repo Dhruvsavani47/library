@@ -23,4 +23,24 @@ export class Book {
             throw new Error('publication year should not be null');
         }
     }
+    public getISBN(): string {
+        return this.isbn;
+    }
+
+    public equals(object: any): boolean {
+        if (this === object) return true;
+        if (object == null || (this.constructor !== object.constructor)) return false;
+        const book = object as Book;
+        return this.isbn === book.isbn;
+    }
+
+    public hashCode(): number {
+        let hash = 0;
+        for (let i = 0; i < this.isbn.length; i++) {
+            const char = this.isbn.charCodeAt(i);
+            hash = (hash << 5) - hash + char;
+            hash |= 0; // Convert to 32bit integer
+        }
+        return hash;
+    }    
 }
