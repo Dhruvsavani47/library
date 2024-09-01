@@ -52,21 +52,37 @@ This project follows TDD principles to solve the kata problem. The Library Manag
 
 --> Features
 
--> User Management - **addUser**: - Adds a new user to the library's user catalog. - Validates that the user is not null. - Throws an exception if the user already exists.
+-> User Management 
+    - **addUser**: 
+        - Adds a new user to the library's user catalog. 
+        - Validates that the user is not null. 
+        - Throws an exception if the user already exists.
 
     - **getUserByName**:
         - Retrieves a user from the library by their username.
         - Returns `null` if the user is not found.
 
--> Book Management - **addBook**: - Allows a user to add a book to the library's inventory. - Validates that the user is a librarian. - Ensures the book is not null. - Throws an exception if the user is unauthorized.
+-> Book Management
+    - **addBook**: 
+        - Allows a user to add a book to the library's inventory. 
+        - Validates that the user is a librarian. - Ensures the book is not null. 
+        - Throws an exception if the user is unauthorized.
 
     - **getBookByISBN**:
         - Retrieves a book from the inventory using its ISBN.
         - Returns `null` if the book is not found.
 
--> Available Books - **viewAvailableBooks**: - Returns a list of all books currently available in the library. - Ensures the list is unmodifiable.
+-> Available Books 
+    - **viewAvailableBooks**: 
+        - Returns a list of all books currently available in the library. 
+        - Ensures the list is unmodifiable.
 
--> Borrowing Books - **borrowBook**: - Allows a user to borrow a book from the library. - Validates that the book is not already borrowed. - Ensures the book exists in the inventory. - Throws an exception if the book is already borrowed.
+-> Borrowing Books 
+    - **borrowBook**: 
+        - Allows a user to borrow a book from the library. 
+        - Validates that the book is not already borrowed. 
+        - Ensures the book exists in the inventory.
+        - Throws an exception if the book is already borrowed.
 
     - **getBorrowerNameByISBN**:
         - Retrieves the name of the user who borrowed a specific book.
@@ -76,7 +92,11 @@ This project follows TDD principles to solve the kata problem. The Library Manag
         - Retrieves details of a borrowed book using its ISBN.
         - Returns `null` if the book is not found.
 
--> Returning Books - **returnBook**: - Allows a user to return a borrowed book to the library. - Validates that the book was borrowed by the same user. - Ensures the book is returned to the inventory.
+-> Returning Books 
+    - **returnBook**: 
+        - Allows a user to return a borrowed book to the library. 
+        - Validates that the book was borrowed by the same user.
+        - Ensures the book is returned to the inventory.
 
 --> Setup Instructions
 
