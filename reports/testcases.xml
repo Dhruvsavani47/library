@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="25" failures="0" errors="0" time="10.387">
+  <testsuite name="Book" errors="0" failures="0" skipped="0" timestamp="2024-09-01T07:20:13" time="5.54" tests="4">
+    <testcase classname="Book should throw an exception when ISBN is null" name="Book should throw an exception when ISBN is null" time="0.049">
+    </testcase>
+    <testcase classname="Book should throw an exception when title is null" name="Book should throw an exception when title is null" time="0.002">
+    </testcase>
+    <testcase classname="Book should throw an exception when author is empty" name="Book should throw an exception when author is empty" time="0.002">
+    </testcase>
+    <testcase classname="Book should throw an exception when publication year is null" name="Book should throw an exception when publication year is null" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Library" errors="0" failures="0" skipped="0" timestamp="2024-09-01T07:20:13" time="7.255" tests="21">
+    <testcase classname="Library should create a library instance" name="Library should create a library instance" time="0.023">
+    </testcase>
+    <testcase classname="Library should throw error if library name is null" name="Library should throw error if library name is null" time="0.039">
+    </testcase>
+    <testcase classname="Library should throw error if library name is empty" name="Library should throw error if library name is empty" time="0.002">
+    </testcase>
+    <testcase classname="Library should throw error if library name has less than 4 characters" name="Library should throw error if library name has less than 4 characters" time="0.002">
+    </testcase>
+    <testcase classname="Library should throw error if user is null" name="Library should throw error if user is null" time="0.004">
+    </testcase>
+    <testcase classname="Library should allow only permitted user to add book" name="Library should allow only permitted user to add book" time="0.003">
+    </testcase>
+    <testcase classname="Library should add user to library" name="Library should add user to library" time="0.002">
+    </testcase>
+    <testcase classname="Library should not allow duplicate users" name="Library should not allow duplicate users" time="0.001">
+    </testcase>
+    <testcase classname="Library should fetch user by username" name="Library should fetch user by username" time="0.002">
+    </testcase>
+    <testcase classname="Library should retrieve all available books" name="Library should retrieve all available books" time="0.002">
+    </testcase>
+    <testcase classname="Library should return unmodifiable map" name="Library should return unmodifiable map" time="0">
+    </testcase>
+    <testcase classname="Library should allow user to borrow book from library" name="Library should allow user to borrow book from library" time="0.001">
+    </testcase>
+    <testcase classname="Library should throw error when book not found during borrow request" name="Library should throw error when book not found during borrow request" time="0.001">
+    </testcase>
+    <testcase classname="Library should throw error when book is already borrowed" name="Library should throw error when book is already borrowed" time="0.002">
+    </testcase>
+    <testcase classname="Library should return borrower name who borrowed book" name="Library should return borrower name who borrowed book" time="0.001">
+    </testcase>
+    <testcase classname="Library should allow user to return book to library" name="Library should allow user to return book to library" time="0.001">
+    </testcase>
+    <testcase classname="Library should throw error when user returns book that is not borrowed by them" name="Library should throw error when user returns book that is not borrowed by them" time="0.002">
+    </testcase>
+    <testcase classname="Library should throw error when no one borrowed book" name="Library should throw error when no one borrowed book" time="0.002">
+    </testcase>
+    <testcase classname="Library should fetch user by username" name="Library should fetch user by username" time="0.001">
+    </testcase>
+    <testcase classname="Library should remove a book from the inventory" name="Library should remove a book from the inventory" time="0.001">
+    </testcase>
+    <testcase classname="Library should throw an error when trying to remove a non-existent book" name="Library should throw an error when trying to remove a non-existent book" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>

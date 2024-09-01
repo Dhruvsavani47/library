@@ -176,8 +176,8 @@ describe('Library', () => {
 
     it('should remove a book from the inventory', () => {
         library.addBook(librarian, book);
-        library.removeBook('123-456-789');
-        const fetchedBook = library.getBookByISBN('123-456-789');
+        library.removeBook('9780132350884');
+        const fetchedBook = library.getBookByISBN('9780132350884');
         expect(fetchedBook).toBeUndefined();
     });
     
