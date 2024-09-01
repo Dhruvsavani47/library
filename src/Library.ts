@@ -69,12 +69,12 @@ export class Library {
         UserValidator.validateUser(user, 'User should not be null');
         const book = this.bookInventory.get(isbn);
 
-        if (!book) {
-            throw new Error("Book not found");
-        }
-
         if (this.isBookBorrowedBySomeUser(isbn)) {
             throw new BookAlreadyBorrowedException('Book is already borrowed');
+        }
+
+        if (!book) {
+            throw new Error("Book not found");
         }
 
         BookValidator.validateBookNotNull(book, 'Book not found');
@@ -111,4 +111,13 @@ export class Library {
         this.bookInventory.set(isbn, book);
         this.borrowedBooks.delete(isbn);
     }
+
+    public removeBook(isbn: string): void {
+        if (!this.bookInventory.has(isbn)) {
+            throw new Error("Book not found");
+        }
+
+        this.bookInventory.delete(isbn);
+    }
+    
 }
