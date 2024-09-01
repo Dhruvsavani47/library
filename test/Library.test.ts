@@ -173,6 +173,13 @@ describe('Library', () => {
     
         expect(fetchedUser).toEqual(user);
     });
+
+    it('should remove a book from the inventory', () => {
+        library.addBook(librarian, book);
+        library.removeBook('123-456-789');
+        const fetchedBook = library.getBookByISBN('123-456-789');
+        expect(fetchedBook).toBeUndefined();
+    });
     
     test('should throw an error when trying to remove a non-existent book', () => {
         expect(() => library.removeBook('9788632383884')).toThrowError('Book not found');
